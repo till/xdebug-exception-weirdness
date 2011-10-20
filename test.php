@@ -4,11 +4,30 @@ set_include_path('/path/to/library/:' . get_include_path());
 require_once 'Zend/Exception.php';
 require_once 'Zend/Date/Exception.php';
 
-try {
-    throw new Zend_Date_Exception('fu');
-} catch (Exception $e) {
-    echo "Exception: " . get_class($e) . PHP_EOL;
-    echo $e->getMessage() . PHP_EOL;
-    exit(1);
+$a = new A;
+$a->foo();
+
+class A
+{
+    function foo()
+    {
+        try {
+            $b = new B;
+            $b->bar();
+        } catch (Exception $e) {
+            echo "Oh noez!" . PHP_EOL;
+            var_dump($e);
+            exit(1);
+        }
+    }
 }
+
+class B
+{
+    function bar()
+    {
+        throw new Zend_Date_Exception('fu');
+    }
+}
+
 echo "no exception" . PHP_EOL;
